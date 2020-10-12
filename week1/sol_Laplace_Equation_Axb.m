@@ -1,7 +1,7 @@
 function [u] = sol_Laplace_Equation_Axb(f, dom2Inp, param)
 %this code is not intended to be efficient. 
 
-[ni, nj]=size(f)
+[ni, nj]=size(f);
 
 %We add the ghost boundaries (for the boundary conditions)
 f_ext = zeros(ni+2, nj+2);
@@ -53,7 +53,6 @@ for j=1:nj+2
     
     %Fill Idx_Ai, idx_Aj and a_ij with the corresponding values and
     %vector b
-    %TO COMPLETE 2
     
     idx_Ai(idx)=p; 
     idx_Aj(idx) = p; 
@@ -77,7 +76,6 @@ for i=1:ni+2
 
     %Fill Idx_Ai, idx_Aj and a_ij with the corresponding values and
     %vector b
-    %TO COMPLETE 3
 
     idx_Ai(idx)=p; 
     idx_Aj(idx) = p; 
@@ -102,7 +100,6 @@ for i=1:ni+2
     
     %Fill Idx_Ai, idx_Aj and a_ij with the corresponding values and
     %vector b
-    %TO COMPLETE 4
 
     idx_Ai(idx)=p; 
     idx_Aj(idx) = p; 
@@ -117,7 +114,7 @@ for i=1:ni+2
     b(p) = 0;
     
 end
-%{
+
 %Inner points
 for j=2:nj+1
     for i=2:ni+1
@@ -129,33 +126,53 @@ for j=2:nj+1
             
             %Fill Idx_Ai, idx_Aj and a_ij with the corresponding values and
             %vector b
-            %TO COMPLETE 5
-            ????
-            ????
-            ????
-            .
-            .
-            .
+
+            idx_Ai(idx)=p; 
+            idx_Aj(idx) = p-(ni+2); 
+            a_ij(idx) = -1;
+            idx=idx+1;
+            
+            idx_Ai(idx) = p;
+            idx_Aj(idx) = p-1;
+            a_ij(idx) = -1;   
+            idx=idx+1;
+            
+            idx_Ai(idx)=p; 
+            idx_Aj(idx) = p; 
+            a_ij(idx) = 4;
+            idx=idx+1;
+            
+            idx_Ai(idx) = p;
+            idx_Aj(idx) = p+1;
+            a_ij(idx) = -1;   
+            idx=idx+1;
+            
+            idx_Ai(idx) = p;
+            idx_Aj(idx) = p+(ni+2);
+            a_ij(idx) = -1;   
+            idx=idx+1;
+                    
+            b(p) = 0;
     
         else %we do not have to inpaint this pixel 
             
             %Fill Idx_Ai, idx_Aj and a_ij with the corresponding values and
             %vector b
-             %TO COMPLETE 6
-            ????
-            ????
-            ????
-            .
-            .
-            .
-            
+
+            idx_Ai(idx) = p;
+            idx_Aj(idx) = p;
+            a_ij(idx) = 1;   
+            idx=idx+1;
+                    
+            b(p) = f_ext(i,j);
+             
         end       
     end
 end
     %A is a sparse matrix, so for memory requirements we create a sparse
     %matrix
-    %TO COMPLETE 7
-    A=sparse(idx_Ai, idx_Aj, a_ij, ???, ???); %??? and ???? is the size of matrix A
+
+    A=sparse(idx_Ai, idx_Aj, a_ij,nPixels, nPixels);
     
     %Solve the sistem of equations
     x=mldivide(A,b);
@@ -165,5 +182,5 @@ end
     
     %Eliminate the ghost boundaries
     u=full(u_ext(2:end-1, 2:end-1));
-    
-%}
+  
+

@@ -72,9 +72,7 @@ I=I/256;
 mask_img=double(imread('image6_mask.tif'));
 mask = mask_img >128; %mask(i,j) == 1 means we have lost information in that pixel
                       %mask(i,j) == 0 means we have information in that
-                      %pixel
-
-size(mask)                      
+                      %pixel                      
                       
 param.hi = 1 / (ni-1);
 param.hj = 1 / (nj-1);
@@ -107,11 +105,8 @@ I_ch1 = I(:,:,1);
 I_ch2 = I(:,:,2);
 I_ch3 = I(:,:,3);
 
-%TO COMPLETE 1
 mask = I_ch1 == 1; %mask_img(i,j) == 1 means we have lost information in that pixel
-                                      %mask(i,j) == 0 means we have information in that pixel
-figure(2)
-imshow(mask)                                 
+                                      %mask(i,j) == 0 means we have information in that pixel                              
                                       
 %%%Parameters for gradient descent (you do not need for week1)
 %param.dt = 5*10^-7;
