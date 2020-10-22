@@ -3,9 +3,9 @@ function [x] = grad_descent(A, b, x)
 r = b - A*x;
 err = norm(r);
 
-tol = 1e-2;
+tolerance = 1e-2;
 i = 1;
-while err > tol
+while err > tolerance
     q = A*r;
     alpha = (transpose(r)*r) /(transpose(q)*r);
     r = b - A*x; 
