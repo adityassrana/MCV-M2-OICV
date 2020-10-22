@@ -180,6 +180,9 @@ end
     
     %Solve the sistem of equations
     x=mldivide(A,b);
+
+    %uncomment for using gradient descent
+    %x = grad_descent(A,b, f_ext(:))
     
     %From vector to matrix
     u_ext= reshape(x, ni+2, nj+2);
