@@ -181,7 +181,7 @@ end
     %Solve the sistem of equations
     x=mldivide(A,b);
 
-    %uncomment for using gradient descent
+    %uncomment for using gradient descent (add "optional" folder and subfolders to path)
     %x = grad_descent(A,b, f_ext(:))
     
     %From vector to matrix

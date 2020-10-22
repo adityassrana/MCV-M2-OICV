@@ -9,6 +9,14 @@ param.hj=1;
 mask_src=logical(imread('rainbow_src_mask.png'));
 mask_dst=logical(imread('rainbow_dst_mask.png'));
 
+if (size(mask_src,3) == 3) 
+  mask_src=mask_src(:,:,1); 
+end
+
+if (size(mask_dst,3) == 3) 
+  mask_dst=mask_dst(:,:,1); 
+ end
+
 %flag to use mixing gradients
 mixing_gradients = 1;
 
