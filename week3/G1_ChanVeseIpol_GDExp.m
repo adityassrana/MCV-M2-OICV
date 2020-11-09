@@ -19,6 +19,7 @@ function [ phi ] = G1_ChanVeseIpol_GDExp( I, phi_0, mu, nu, eta, lambda1, lambda
 hi=1;
 hj=1;
 
+filename = 'phi_evolution_phantom19_checkboard.gif';
 
 phi=phi_0;
 dif=inf;
@@ -31,8 +32,8 @@ while dif>tol && nIter<iterMax
     H = 1/2.*(1+(2/pi).*atan(phi_old./epHeaviside));
     
     %Fixed phi, Minimization w.r.t c1 and c2 (constant estimation)
-%     c1 = sum(sum(I.*H)) ./ sum(sum(H)); %TODO 1: Line to complete
-%     c2 = sum(sum(I.*(1-H))) ./ sum(sum(1-H)); %TODO 2: Line to complete
+    c1 = sum(sum(I.*H)) ./ sum(sum(H)); %TODO 1: Line to complete
+    c2 = sum(sum(I.*(1-H))) ./ sum(sum(1-H)); %TODO 2: Line to complete
 
 %     c1 = sum(I(2:end-1,2:end-1).*H(2:end-1,2:end-1)) / sum(H(2:end-1,2:end-1)); %TODO 1: Line to complete
 %     c2 = sum(I(2:end-1,2:end-1).*(1-H(2:end-1,2:end-1))) / sum(1-H(2:end-1,2:end-1)); %TODO 2: Line to complete
@@ -123,6 +124,19 @@ while dif>tol && nIter<iterMax
         hold off
     drawnow;
     pause(.0001); 
+    
+    frame = getframe(1);
+    im = frame2im(frame);
+    [imind,cm] = rgb2ind(im,256);
+    if nIter == 1
+      imwrite(imind,cm,filename,'gif', 'Loopcount',inf);
+      imwrite(imind,cm,filename,'gif','WriteMode','append');
+    else 
+%       imwrite(imind,cm,filename,'gif','WriteMode','append');
+      if mod(nIter, 5)==0
+          imwrite(imind,cm,filename,'gif','WriteMode','append');
+      end
+    end
     
     disp(['Iter: ', num2str(nIter), ', Dif:', num2str(dif)])
 end
